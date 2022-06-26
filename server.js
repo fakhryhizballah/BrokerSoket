@@ -8,7 +8,6 @@ broker.on('message', async function (topic, message){
     let date_ob = new Date();
     if (topic == 'mesin/status/online' ){
         console.log(message.toString() + " is online");
-        // let date_ob = new Date();
         var id = (message.toString())
         const pesan = {
             message: "ID : " + id + " Online",
@@ -21,7 +20,6 @@ broker.on('message', async function (topic, message){
     }
     if (topic == 'mesin/status/offline' ){
         console.log(message.toString() + " is offline");
-        // let date_ob = new Date();
         var id = (message.toString())
         const pesan = {
             message: "ID : " + id + " Offline",

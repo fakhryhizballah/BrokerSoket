@@ -15,8 +15,7 @@ broker.on('connect', function () {
     broker.subscribe('$share/server/mesin/data/log/#');
     broker.subscribe('$share/server/nodeTrans');
 })
-// exports.client = client;
-// exports.conMysql = con;
+
 module.exports = {
     broker,
 }

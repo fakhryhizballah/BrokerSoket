@@ -25,7 +25,6 @@ io.on("connection", (socket) => {
         console.log("user online : " + user);
         io.emit("pesan", "user online " + user);
     });
-    socket.emit("hello", "world");
 });
 
 httpServer.listen(port, function () {
