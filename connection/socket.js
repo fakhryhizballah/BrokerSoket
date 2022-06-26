@@ -6,7 +6,7 @@ const port = 3800;
 const io = new Server(httpServer, {
     /* options */
     cors: {
-        // origin: "http://127.0.0.1:5500/",
+        // origin: "http://127.0.0.1:8080/",
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"]
     },
@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
         console.log("user online : " + user);
         io.emit("pesan", "user online " + user);
     });
-
+    socket.emit("hello", "world");
 });
 
 httpServer.listen(port, function () {
