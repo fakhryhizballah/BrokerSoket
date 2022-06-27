@@ -6,7 +6,7 @@ const port = 3800;
 const io = new Server(httpServer, {
     /* options */
     cors: {
-        // origin: "http://127.0.0.1:8080/",
+        origin: "*",
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"]
     },
