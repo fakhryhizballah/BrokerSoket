@@ -11,6 +11,10 @@ const io = new Server(httpServer, {
     //     allowedHeaders: ["my-custom-header"],
     //     credentials: true
     // },
+    cors: {
+        // origin: ['http://localhost:8080','https://air.spairum.my.id'],
+        origin: '*',
+      }
 
 });
 var user = 0;
