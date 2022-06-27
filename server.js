@@ -73,6 +73,17 @@ broker.on('message', async function (topic, message){
             console.log(err)
         }
     }
+    if (topic == 'current') {
+        try {
+            const data = JSON.parse(message)
+            console.log('json current');
+            var user = data.user
+            console.log(user);
+            io.emit("current/" + user, data);
+        } catch (err) {
+            console.error(err)
+        }
+    }
     if (topic == 'nodeTrans') {
 
         let id_mesin, mesinID, id_user, HargaTotal, nama, vaule;

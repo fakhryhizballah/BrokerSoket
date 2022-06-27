@@ -14,6 +14,7 @@ broker.on('connect', function () {
     broker.subscribe('$share/server/mesin/status/#');
     broker.subscribe('$share/server/mesin/data/log/#');
     broker.subscribe('$share/server/nodeTrans');
+    broker.subscribe('$share/server/current');
 })
 
 module.exports = {
