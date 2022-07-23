@@ -103,11 +103,11 @@ broker.on('message', async function (topic, message){
             let kredit = parseInt(user['kredit']);
             let newDebit = debit - HargaTotal;
             let newKredit = kredit + HargaTotal;
-            await con.beginTransaction();
+            // await con.beginTransaction();
             console.log("running query...");
             await updateUser(id_user, newDebit, newKredit, date_ob);
             await postHistory(id_user, id_mesin, lokasi, nama, vaule, HargaTotal, date_ob);
-            await con.commit();
+            // await con.commit();
             console.log("transaction committed.");
         } catch (err) {
             console.error(err)
