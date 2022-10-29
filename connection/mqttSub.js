@@ -13,6 +13,8 @@ broker.on('connect', function () {
     console.log('Mqtt is connect');
     broker.subscribe('$share/server/mesin/status/#');
     broker.subscribe('$share/server/mesin/data/log/#');
+    broker.subscribe('$share/server/mesin/uid/#');
+    broker.subscribe('$share/server/mesin/endRefill/#');
     broker.subscribe('$share/server/nodeTrans');
     broker.subscribe('$share/server/current');
 })
