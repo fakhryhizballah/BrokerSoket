@@ -118,6 +118,7 @@ broker.on('message', async (topic, message) => {
     if (uid == 'uid') {
         let id_mesin = topic.split('/')[2]
         let data = message.toString()
+        console.log("UID CARD:" + data);
         let saldo_card = await getSaldoCard(data)
         let mesin = await getRFIDMesin(id_mesin);
         let debit;
@@ -133,6 +134,8 @@ broker.on('message', async (topic, message) => {
             debit = parseInt(saldo_card.debit);
         } catch (error) {
             broker.publish('mesin/rejection/' + id_mesin, "Maaf Kartu Anda Tidak Terdaftar", { qos: 2 })
+            broker.publish('mesin/RFID/LCD1' + id_mesin, "                ", { qos: 2 })
+            broker.publish('mesin/RFID/LCD2' + id_mesin, "                ", { qos: 2 })
             broker.publish('mesin/RFID/LCD1' + id_mesin, "Maaf Kartu Anda")
             broker.publish('mesin/RFID/LCD2' + id_mesin, "Tidak Terdaftar")
             console.log("Maaf Kartu Anda Tidak Terdaftar");
@@ -147,8 +150,10 @@ broker.on('message', async (topic, message) => {
                 FAKTOR_POMPA: mesin.faktor
             }
             broker.publish('mesin/fill/' + id_mesin, JSON.stringify(pesan).toString(), { qos: 2 });
+            broker.publish('mesin/RFID/LCD1' + id_mesin, "                ", { qos: 2 })
+            broker.publish('mesin/RFID/LCD2' + id_mesin, "                ", { qos: 2 })
             broker.publish('mesin/RFID/LCD1' + id_mesin, "Sedang Mengisi . . .")
-            broker.publish('mesin/RFID/LCD2' + id_mesin, "                     ")
+            broker.publish('mesin/RFID/LCD2' + id_mesin, "TAP CARD TO STOP")
             return;
         }
         let hagraPer = parseInt(debit) / parseInt(mesin.harga);
@@ -162,8 +167,10 @@ broker.on('message', async (topic, message) => {
                     FAKTOR_POMPA: mesin.faktor
                 }
                 broker.publish('mesin/fill/' + id_mesin, JSON.stringify(pesan).toString(), { qos: 2 });
+                broker.publish('mesin/RFID/LCD1' + id_mesin, "                ", { qos: 2 })
+                broker.publish('mesin/RFID/LCD2' + id_mesin, "                ", { qos: 2 })
                 broker.publish('mesin/RFID/LCD1' + id_mesin, "Sedang Mengisi . . .")
-                broker.publish('mesin/RFID/LCD2' + id_mesin, "                     ")
+                broker.publish('mesin/RFID/LCD2' + id_mesin, "TAP CARD TO STOP")
                 return;
             } else {
                 let pesan = {
@@ -172,14 +179,18 @@ broker.on('message', async (topic, message) => {
                     FAKTOR_POMPA: mesin.faktor
                 }
                 broker.publish('mesin/fill/' + id_mesin, JSON.stringify(pesan).toString(), { qos: 2 });
+                broker.publish('mesin/RFID/LCD1' + id_mesin, "                ", { qos: 2 })
+                broker.publish('mesin/RFID/LCD2' + id_mesin, "                ", { qos: 2 })
                 broker.publish('mesin/RFID/LCD1' + id_mesin, "Sedang Mengisi . . .")
-                broker.publish('mesin/RFID/LCD2' + id_mesin, "                     ")
+                broker.publish('mesin/RFID/LCD2' + id_mesin, "TAP CARD TO STOP")
                 return;
             }
         }
         console.log(mesin);
         console.log(saldo_card);
         broker.publish('mesin/rejection/' + id_mesin, "Maaf Saldo Kartu Anda Tidak Mencukupi", { qos: 2 })
+        broker.publish('mesin/RFID/LCD1' + id_mesin, "                ", { qos: 2 })
+        broker.publish('mesin/RFID/LCD2' + id_mesin, "                ", { qos: 2 })
         broker.publish('mesin/RFID/LCD1/' + id_mesin, "Maaf Saldo Kartu")
         broker.publish('mesin/RFID/LCD2/' + id_mesin, "Anda Tidak Mencukupi")
     }
@@ -203,6 +214,10 @@ broker.on('message', async (topic, message) => {
         let debit = parseInt(saldo_card.debit - harga_total);
         updateSaldoCard(debit, data.ID_USER);
         postHistoryCard(data.ID_USER, id_mesin, data.vaule, harga_total, date_ob);
+        broker.publish('mesin/RFID/LCD1' + id_mesin, "                ", { qos: 2 })
+        broker.publish('mesin/RFID/LCD2' + id_mesin, "                ", { qos: 2 })
+        broker.publish('mesin/RFID/LCD1/' + id_mesin, "Terima Kasih")
+        broker.publish('mesin/RFID/LCD2/' + id_mesin, "silahkan ambil air")
     }
 });
 
