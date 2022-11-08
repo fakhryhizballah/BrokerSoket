@@ -136,8 +136,8 @@ broker.on('message', async (topic, message) => {
             broker.publish('mesin/rejection/' + id_mesin, "Maaf Kartu Anda Tidak Terdaftar", { qos: 2 })
             // broker.publish('mesin/RFID/LCD1/' + id_mesin, "                ", { qos: 2 })
             // broker.publish('mesin/RFID/LCD2/' + id_mesin, "                ", { qos: 2 })
-            broker.publish('mesin/RFID/LCD1/' + id_mesin, "Maaf Kartu Anda")
-            broker.publish('mesin/RFID/LCD2/' + id_mesin, "Tidak Terdaftar")
+            broker.publish('mesin/RFID/LCD1/' + id_mesin, "Maaf Kartu Anda    ")
+            broker.publish('mesin/RFID/LCD2/' + id_mesin, "Tidak Terdaftar    ")
             console.log("Maaf Kartu Anda Tidak Terdaftar");
             return;
         }
@@ -153,7 +153,7 @@ broker.on('message', async (topic, message) => {
             // broker.publish('mesin/RFID/LCD1/' + id_mesin, "                ", { qos: 2 })
             // broker.publish('mesin/RFID/LCD2/' + id_mesin, "                ", { qos: 2 })
             broker.publish('mesin/RFID/LCD1/' + id_mesin, "Sedang Mengisi . . .")
-            broker.publish('mesin/RFID/LCD2/' + id_mesin, "TAP CARD TO STOP")
+            broker.publish('mesin/RFID/LCD2/' + id_mesin, "TAP CARD TO STOP   ")
             return;
         }
         let hagraPer = parseInt(debit) / parseInt(mesin.harga);
@@ -170,7 +170,7 @@ broker.on('message', async (topic, message) => {
                 // broker.publish('mesin/RFID/LCD1/' + id_mesin, "                ", { qos: 2 })
                 // broker.publish('mesin/RFID/LCD2/' + id_mesin, "                ", { qos: 2 })
                 broker.publish('mesin/RFID/LCD1/' + id_mesin, "Sedang Mengisi . . .")
-                broker.publish('mesin/RFID/LCD2/' + id_mesin, "TAP CARD TO STOP")
+                broker.publish('mesin/RFID/LCD2/' + id_mesin, "TAP CARD TO STOP    ")
                 return;
             } else {
                 let pesan = {
@@ -182,7 +182,7 @@ broker.on('message', async (topic, message) => {
                 // broker.publish('mesin/RFID/LCD1/' + id_mesin, "                ", { qos: 2 })
                 // broker.publish('mesin/RFID/LCD2/' + id_mesin, "                ", { qos: 2 })
                 broker.publish('mesin/RFID/LCD1/' + id_mesin, "Sedang Mengisi . . .")
-                broker.publish('mesin/RFID/LCD2/' + id_mesin, "TAP CARD TO STOP")
+                broker.publish('mesin/RFID/LCD2/' + id_mesin, "TAP CARD TO STOP    ")
                 return;
             }
         }
@@ -191,7 +191,7 @@ broker.on('message', async (topic, message) => {
         broker.publish('mesin/rejection/' + id_mesin, "Maaf Saldo Kartu Anda Tidak Mencukupi", { qos: 2 })
         // broker.publish('mesin/RFID/LCD1/' + id_mesin, "                ", { qos: 2 })
         // broker.publish('mesin/RFID/LCD2/' + id_mesin, "                ", { qos: 2 })
-        broker.publish('mesin/RFID/LCD1/' + id_mesin, "Maaf Saldo Kartu")
+        broker.publish('mesin/RFID/LCD1/' + id_mesin, "Maaf Saldo Kartu    ")
         broker.publish('mesin/RFID/LCD2/' + id_mesin, "Anda Tidak Mencukupi")
     }
     if (uid == 'endRefill') {
@@ -216,8 +216,8 @@ broker.on('message', async (topic, message) => {
         postHistoryCard(data.ID_USER, id_mesin, data.vaule, harga_total, date_ob);
         // broker.publish('mesin/RFID/LCD1/' + id_mesin, "                ", { qos: 2 })
         // broker.publish('mesin/RFID/LCD2/' + id_mesin, "                ", { qos: 2 })
-        broker.publish('mesin/RFID/LCD1/' + id_mesin, "Terima Kasih")
-        broker.publish('mesin/RFID/LCD2/' + id_mesin, "silahkan ambil air")
+        broker.publish('mesin/RFID/LCD1/' + id_mesin, "    Terima Kasih    ")
+        broker.publish('mesin/RFID/LCD2/' + id_mesin, "Silahkan ambil air  ")
     }
 });
 
