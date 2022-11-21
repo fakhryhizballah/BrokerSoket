@@ -1,7 +1,7 @@
 const { broker } = require('./connection/mqttSub');
 const { io } = require('./connection/socket');
 const { getMesin, getUser, postHistory, updateUser } = require('./model/user');
-const { log_mesin, UPDATE_mesin, UPDATE_mesin_status, UPDATE_mesin_vaule } = require('./model/mesin');
+const { log_mesin, UPDATE_mesin, UPDATE_mesin_status, UPDATE_mesin_vaule, UPDATE_mesin_indikator } = require('./model/mesin');
 const { getSaldoCard, getRFIDMesin, updateSaldoCard, postHistoryCard } = require('./model/rfid');
 
 broker.on('message', async (topic, message) => {
@@ -16,9 +16,10 @@ broker.on('message', async (topic, message) => {
         };
         const dataMessage = JSON.stringify(pesan).toString();
         broker.publish('sendGrup', dataMessage)
-        log_mesin(id, "Online", date_ob);
+        log_mesin(id, "ESP_A Online", date_ob);
         UPDATE_mesin_status("Online", date_ob, id);
     }
+
     if (topic == 'mesin/status/offline' ){
         console.log(message.toString() + " is offline");
         var id = (message.toString())
@@ -28,11 +29,27 @@ broker.on('message', async (topic, message) => {
         };
         const dataMessage = JSON.stringify(pesan).toString();
         broker.publish('sendGrup', dataMessage)
-        log_mesin(id, "Offline", date_ob);
+        log_mesin(id, "ESP_A Offline", date_ob);
         UPDATE_mesin_status("Offline", date_ob, id);
 
         io.emit("mesin/status/offline", message.toString());
     }
+    // ESP_B
+    if (topic == 'mesin/status/online/ESP_B') {
+        console.log(message.toString() + " ESP B is online");
+        var id = (message.toString())
+        console.log(topic, message.toString());
+        log_mesin(id, "ESP_B Online", date_ob);
+        UPDATE_mesin_indikator("Online", date_ob, id);
+    }
+    if (topic == 'mesin/status/offline/ESP_B') {
+        console.log(message.toString() + " ESP B is online");
+        var id = (message.toString())
+        console.log(topic, message.toString());
+        log_mesin(id, "ESP_B Offline", date_ob);
+        UPDATE_mesin_indikator("Offline", date_ob, id);
+    }
+
     if (topic == 'mesin/status/rssi') {
         const pesan = message.toString()
         console.log(pesan);
@@ -44,7 +61,7 @@ broker.on('message', async (topic, message) => {
             console.log("vaule: " + data.vaule)
             UPDATE_mesin_vaule(data.vaule, date_ob, data.clientid);
         }catch (err){
-            console.log(err)
+            console.log(err);
         }
         // console.log(message.toString() + " is rssi");
     }
@@ -52,10 +69,7 @@ broker.on('message', async (topic, message) => {
         const pesan = message.toString()
         console.log(pesan);
         try {
-            const data = JSON.parse(pesan)
-            // console.log("clientid: " + data.clientid)
-            // console.log("Wifi: " + data.Wifi)
-            // console.log("IP: " + data.IP)
+            const data = JSON.parse(pesan)  
             log_mesin(data.clientid, "Wifi: " + data.Wifi + " | " + "IP: " + data.IP, date_ob);
         } catch (err) {
             console.log(err)

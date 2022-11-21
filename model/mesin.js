@@ -32,10 +32,19 @@ const UPDATE_mesin_status = function (status, date_ob, id) {
     });
     return;
 };
+const UPDATE_mesin_indikator = function (status, date_ob, id) {
+    var sql = `UPDATE mesin SET  indikator = ?, updated_at= ? WHERE  id_mesin= ?`;
+    con.query(sql, [status, date_ob, id], function (err, result) {
+        if (err) throw err;
+        console.log(result.affectedRows + " record(s) updated status mesin");
+    });
+    return;
+};
 
 module.exports = {
     log_mesin,
     UPDATE_mesin,
     UPDATE_mesin_status,
-    UPDATE_mesin_vaule
+    UPDATE_mesin_vaule,
+    UPDATE_mesin_indikator
 }

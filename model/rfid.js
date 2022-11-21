@@ -20,7 +20,8 @@ const getSaldoCard = async function (uid) {
     });
 };
 const getRFIDMesin = function (id_mesin) {
-    var sql = `SELECT * FROM mesin_rfid WHERE id_mesin = ?`;
+    // var sql = `SELECT * FROM mesin_rfid WHERE id_mesin = ?`;
+    var sql = `SELECT * FROM new_mesin WHERE id_mesin = ?`;
     // con.query(sql, [id_mesin], function (err, result) {
     //     if (err) throw err;
     //     result = Object.values(JSON.parse(JSON.stringify(result)));
